@@ -33,15 +33,15 @@ public class AutomationTest extends TestListenerAdapter {
 
     @Test(description = "search product", dependsOnMethods = {"openPage"})
     public void searchProduct() {
-        driver.findElement(By.name("substring")).sendKeys("Avengers");
+        driver.findElement(By.name("substring")).sendKeys("Rooster Mug");
         driver.findElement(By.name("substring")).sendKeys(Keys.RETURN);
-        driver.findElement(By.linkText("Avengers: Fabrikations Plush [Related Products]")).click();
+        driver.findElement(By.linkText("Rooster Mug in White [Related products]")).click();
 
-        String productName = driver.findElement(By.xpath("//*[@class='fn title'][contains(text(),'Avengers: Fabrikations Plush [Related Products]')]")).getAttribute("innerHTML");
-        String productNameExpected = "Avengers: Fabrikations Plush [Related Products]";
+        String productName = driver.findElement(By.xpath("//*[@class='fn title'][contains(text(),'Rooster Mug in White [Related products]')]")).getAttribute("innerHTML");
+        String productNameExpected = "Rooster Mug in White [Related products]";
 
         String productPrice = driver.findElement(By.xpath("//*[@class='price product-price'][contains(text(),'$')]")).getAttribute("innerHTML");
-        String productPriceExpected = "$14.99";
+        String productPriceExpected = "$19.99";
 
         Assert.assertEquals(productName, productNameExpected);
         Assert.assertEquals(productPrice, productPriceExpected);
@@ -53,7 +53,7 @@ public class AutomationTest extends TestListenerAdapter {
         js.executeScript("arguments[0].click()", addCart);
 
         String productAdd = driver.findElement(By.xpath("//*[@class='item-name'][contains(text(),' ')]")).getAttribute("innerHTML");
-        String productAddExpected = "Avengers: Fabrikations Plush [Related Products]";
+        String productAddExpected = "Rooster Mug in White [Related products]";
 
         Assert.assertEquals(productAdd, productAddExpected);
     }
@@ -68,16 +68,11 @@ public class AutomationTest extends TestListenerAdapter {
         driver.findElement(By.id("shippingaddress-firstname")).sendKeys("Fulano");
         driver.findElement(By.id("shippingaddress-lastname")).sendKeys("Beltrano");
         driver.findElement(By.id("shippingaddress-street")).sendKeys("123 st", Keys.TAB);
-
-        Select country= new Select (driver.findElement(By.id("shippingaddress-country-code")));
-        country.selectByVisibleText("United States");
-
-        Select state= new Select (driver.findElement(By.id("shippingaddress-state-id")));
-        state.selectByVisibleText("Florida");
-        driver.findElement(By.id("shippingaddress-city")).sendKeys("Orlando");
+        Select state = new Select(driver.findElement(By.id("shippingaddress-state-id")));
+        state.selectByVisibleText("Rio Grande do Sul");
 
         String totalPrice = driver.findElement(By.xpath("//*[@class='order-total'][contains(text(),'$')]")).getAttribute("innerHTML").replaceAll("\\s+", "");
-        String totalPriceExpected = "$20.75";
+        String totalPriceExpected = "$25.84";
         Assert.assertEquals(totalPrice, totalPriceExpected);
         try {
             Thread.sleep(10000);
